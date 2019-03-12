@@ -1,15 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.IO;
 using System.Text;
 using System.Threading.Tasks;
+using System.IO;
 
-namespace C0731779__ASSIGNMENT_
-{
+
 class JournalEntry
 {
-    public JournalEntry(string note, int dist) {
+    public JournalEntry(string note, int dist)
+    {
         villageName = note; distanceTraveled = dist;
         HowFarToGetBack = distanceTraveled;
     }
@@ -20,17 +20,21 @@ class JournalEntry
     public string getVillageName() { return villageName; }
 }
 
+
+
 class Hugi
 {
     private static JournalEntry je;
     public static bool FoundAstrilde = false;
+
     public static List<JournalEntry> HugiJournal = new List<JournalEntry>();
+
     public static int CalculateDistanceWalked()
     {
         int DistanceWalked = 0;
         foreach (var je in HugiJournal)
         {
-            Console.WriteLine(" {0}  --   {1} *** --- {2} ", je.getDistanceWalked(), je.getVillageName(), je.HowFarToGetBack  );
+            Console.WriteLine(" {0}  --   {1} *** --- {2} ", je.getDistanceWalked(), je.getVillageName(), je.HowFarToGetBack);
             DistanceWalked += je.getDistanceWalked() + je.HowFarToGetBack;
         }
         return DistanceWalked;
@@ -40,10 +44,10 @@ class Hugi
 class CountrySide
 {
     static void Main()
-        {
-            CountrySide a = new CountrySide();
-            a.Run();
-        }
+    {
+        CountrySide a = new CountrySide();
+        a.Run();
+    }
     Village Maeland;
     Village Helmholtz;
     Village Alst;
@@ -56,30 +60,28 @@ class CountrySide
     {
         if (Hugi.FoundAstrilde) return;
 
-        // Here Hugi records his travels, as any Norse Hero will do:
-        // TO DO : How does Hugi journal his visit to each village?
-        
+
+        Hugi.HugiJournal.Add(new JournalEntry(CurrentVillage.VillageName, CurrentVillage.distanceFromPreviousVillage));
+        try
+        {
             Console.WriteLine("I am in {0}", CurrentVillage.VillageName);
 
-            Hugi.HugiJournal.Add(new JournalEntry(CurrentVillage.VillageName, CurrentVillage.distanceFromPreviousVillage));
-            try
+            if (CurrentVillage.isAstrildgeHere)
             {
-                Console.WriteLine("I am in {0}", CurrentVillage.VillageName);
-                if (CurrentVillage.isAstrildgeHere)
-                {
-                    Console.WriteLine("I found Dear Astrildge in {0}", CurrentVillage.VillageName);
-                    Console.WriteLine("**** FEELING HAPPY!!! ******");
-                    Console.WriteLine("Astrilde, I walked {0} vika to find you. Will you marry me?", Hugi.CalculateDistanceWalked());
-                    Hugi.FoundAstrilde = true;
-              
-                }
-                TraverseVillages(CurrentVillage.west);
-                TraverseVillages(CurrentVillage.east);
+                Console.WriteLine("I found Dear Astrildge in {0}", CurrentVillage.VillageName);
+                Console.WriteLine("**** FEELING HAPPY!!! ******");
+                Console.WriteLine("Astrilde, I walked {0} vika to find you. Will you marry me?", Hugi.CalculateDistanceWalked());
+                Console.ReadLine();
+                Hugi.FoundAstrilde = true;
             }
-            catch (NullReferenceException) { }
+
+            TraverseVillages(CurrentVillage.west);
+            TraverseVillages(CurrentVillage.east);
 
 
-            }
+        }
+        catch (NullReferenceException) { }
+    }
 
     public void Run()
     {
@@ -90,7 +92,6 @@ class CountrySide
         Helmholtz = new Village("helmholtz", false);
         Uster = new Village("Uster", true);
         Badden = new Village("Badden", false);
-
 
         Alst.VillageSetup(0, Schvenig, Wessig);
         Schvenig.VillageSetup(14, Maeland, Helmholtz);
@@ -104,13 +105,16 @@ class CountrySide
         this.Announcement();
     }
 
-    public void Announcement()
+  public void Announcement()
     {
         try
         {
-            using (StreamReader sr = new StreamReader("C:/Users/kirat/source/repos/C0731779-(ASSIGNMENT)/announcement.txt"))
+           
+            using (StreamReader sr = new StreamReader("U:/Users/732135/annoucement.txt"))
             {
                 string line;
+
+                
                 while ((line = sr.ReadLine()) != null)
                 {
                     Console.WriteLine(line);
@@ -119,32 +123,29 @@ class CountrySide
         }
         catch (Exception e)
         {
-            Console.WriteLine("The file could not be read:");
+           
+           Console.WriteLine("The file could not be read:");
             Console.WriteLine(e.Message);
         }
     }
 }
-
 class Village
-    {
-
+{
     public Village(string _villageName, bool _isAHere)
-        {
-            isAstrildgeHere = _isAHere;
-            VillageName = _villageName;
-        }
-        public void VillageSetup(int _prevVillageDist, Village _westVillage, Village _eastVillage)
-        {
-            east = _eastVillage;
-            west = _westVillage;
-            distanceFromPreviousVillage = _prevVillageDist;
-        }
-
-        public Village west;
-        public Village east;
-        public string VillageName;
-        public int distanceFromPreviousVillage;
-        public bool isAstrildgeHere;
+    {
+        isAstrildgeHere = _isAHere;
+        VillageName = _villageName;
     }
-   }
+    public void VillageSetup(int _prevVillageDist, Village _westVillage, Village _eastVillage)
+    {
+        east = _eastVillage;
+        west = _westVillage;
+        distanceFromPreviousVillage = _prevVillageDist;
+    }
 
+    public Village west;
+    public Village east;
+    public string VillageName;
+    public int distanceFromPreviousVillage;
+    public bool isAstrildgeHere;
+}
