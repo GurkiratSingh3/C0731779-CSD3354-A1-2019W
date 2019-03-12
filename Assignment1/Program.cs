@@ -66,12 +66,14 @@ namespace C0731779__ASSIGNMENT_
                     Console.WriteLine("I found Dear Astrildge in {0}", CurrentVillage.VillageName);
                     Console.WriteLine("**** FEELING HAPPY!!! ******");
                     Console.WriteLine("Astrilde, I walked {0} vika to find you. Will you marry me?", Hugi.CalculateDistanceWalked());
+                    Console.ReadLine();
                     Hugi.FoundAstrilde = true;
                 }
                 TraverseVillages(CurrentVillage.west);
                 TraverseVillages(CurrentVillage.east);
             }
             catch (NullReferenceException) { }
+
         }
 
         public void Run()
@@ -106,6 +108,7 @@ namespace C0731779__ASSIGNMENT_
                     while ((line = sr.ReadLine()) != null)
                     {
                         Console.WriteLine(line);
+                        Console.ReadLine();
                     }
                 }
             }
@@ -113,6 +116,7 @@ namespace C0731779__ASSIGNMENT_
             {
                 Console.WriteLine("The file could not be read:");
                 Console.WriteLine(e.Message);
+                Console.ReadLine();
             }
         }
     }
