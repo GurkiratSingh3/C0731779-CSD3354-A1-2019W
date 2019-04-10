@@ -8,6 +8,10 @@ using System.IO;
 
 class JournalEntry
 {
+    /*Gurkirat Singh - C0731779
+     * Robindeep Singh - C0723381
+     * Arashpreet Singh - C0727466
+     */
     public JournalEntry(string note, int dist)
     {
         villageName = note; distanceTraveled = dist;
